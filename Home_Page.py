@@ -1,6 +1,8 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+
 
 # Load the pub dataset
 pub_data = pd.read_csv('open_pubs.csv', header=None)
@@ -36,3 +38,12 @@ stats['count'] = stats['count'].astype(int)
 stats = stats[['count', 'mean', 'std', 'min', '25%', '50%', '75%', 'max']]
 st.dataframe(stats.style.highlight_max(axis=0, color='#EB6864'))
 
+# Plot the top local authorities
+st.write("Top Local Authorities:")
+top_local_authorities = pub_data.groupby('local_authority')['fsa_id'].count().sort_values(ascending=False)[:10]
+fig, ax = plt.subplots()
+ax.barh(top_local_authorities.index, top_local_authorities.values, color='#7F45FA')
+ax.invert_yaxis()
+ax.set_xlabel('Number of Pubs')
+ax.set_title('Top Local Authorities by Number of Pubs')
+st.pyplot(fig)
