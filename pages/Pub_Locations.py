@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
+
+os.system("pip install folium")
 import folium
 from streamlit_folium import folium_static
 
